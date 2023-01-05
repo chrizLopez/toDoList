@@ -10,16 +10,17 @@ const styles = StyleSheet.create({
   todoTxt: {
     fontSize: 15,
     fontWeight: '600',
-    marginLeft: 20,
+    marginLeft: 10,
   },
-  itemContent: {
+  leftItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '65%'
+  },
+  rightItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  // rightItem: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  // },
   completedTaskTxt: {
     textDecorationLine: 'line-through',
   },
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 15,
     borderRadius: 10,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: StyleSheet.hairlineWidth
   }
 });
 

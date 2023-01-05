@@ -13,7 +13,7 @@ const ItemList = ({ data, removeItem, taskComplete, togglePrioModal }) => {
   if (data.priority == 4) dataPrioColor = 'red';
   return (
     <View style={styles.itemView}>
-      <View style={styles.itemContent}>
+      <View style={styles.leftItem}>
         <TouchableOpacity onPress={() => taskComplete(data)}>
           {data.status === 1 ? (
             <CheckIcon height={25} width={25} />
@@ -23,7 +23,7 @@ const ItemList = ({ data, removeItem, taskComplete, togglePrioModal }) => {
         </TouchableOpacity>
         <Text style={[styles.todoTxt, data.status === 1 ? styles.completedTaskTxt : {}]}>{data.item}</Text>
       </View>
-      <View style={styles.itemContent}>
+      <View style={styles.rightItem}>
         <TouchableOpacity onPress={togglePrioModal}>
           <View style={[styles.priorityBox, { backgroundColor: dataPrioColor }]} />
         </TouchableOpacity>
