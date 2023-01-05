@@ -12,12 +12,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: 20,
   },
-  leftItem: {
+  itemContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  // rightItem: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  // },
   completedTaskTxt: {
     textDecorationLine: 'line-through',
+  },
+  priorityBox: {
+    width: 30,
+    height: 20,
+    marginRight: 15,
+    borderRadius: 10,
+    borderWidth: StyleSheet.hairlineWidth,
   }
 });
 

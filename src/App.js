@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
-import InputBox from './components/inputBox';
 import { findIndex, filter } from 'lodash';
 
 import ItemList from './components/itemList';
+import InputBox from './components/inputBox';
+import PriorityModal from './components/priorityModal';
 import styles from './style';
 
 const App = () => {
   const [keyCounter, setKeyCounter] = useState(1);
   const [completedTasks, setCompletedTasks] = useState(1);
   const [todoItem, setTodoItem] = useState([]);
+  const [showPrioModal, setShowPrioModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
     const list = filter(todoItem, (item) => item.status == 1);
@@ -39,6 +42,20 @@ const App = () => {
     setKeyCounter(keyCounter + 1);
   }
 
+  const handleTogglePrio = (item) => {
+    setSelectedTask(item);
+    setShowPrioModal(true);
+  }
+
+  const handleSetPriority = (val) => {
+    const slots = [...todoItem];
+    const ind = findIndex(slots, (it) => it.id === selectedTask.id);
+    slots[ind].priority = val;
+    setTodoItem(slots);
+    setKeyCounter(keyCounter + 1);
+    setShowPrioModal(false);
+  }
+
   const listItems = todoItem.map((item) => {
     if (item.status === 1) return;
     return (
@@ -47,6 +64,7 @@ const App = () => {
         key={item.id}
         removeItem={handleRemoveItem}
         taskComplete={handleTaskCompleted}
+        togglePrioModal={() => handleTogglePrio(item)}
       />
     )
   });
@@ -59,6 +77,7 @@ const App = () => {
         key={item.id}
         removeItem={handleRemoveItem}
         taskComplete={handleTaskCompleted}
+        togglePrioModal={() => handleTogglePrio(item)}
       />
     )
   });
@@ -70,6 +89,11 @@ const App = () => {
 
   return (
     <SafeAreaView>
+      <PriorityModal
+        show={showPrioModal}
+        closePriorityModal={() => setShowPrioModal(false)}
+        setPriority={(val) => handleSetPriority(val)}
+      />
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header}>
