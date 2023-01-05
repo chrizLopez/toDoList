@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   listContainer: {
-
+    marginHorizontal: 60,
+    marginTop: 50,
   }
 });
 
