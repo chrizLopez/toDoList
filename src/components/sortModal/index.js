@@ -3,7 +3,7 @@ import { View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback } from 'r
 
 import styles from './style';
 
-const PriorityModal = ({ show, closePriorityModal, setPriority }) => {
+const SortModal = ({ show, closeSortModal, setSortBy }) => {
   return (
     <View>
       <Modal
@@ -14,42 +14,32 @@ const PriorityModal = ({ show, closePriorityModal, setPriority }) => {
         <TouchableOpacity
           style={styles.centeredView}
           activeOpacity={1}
-          onPress={closePriorityModal}
+          onPress={closeSortModal}
         >
           <TouchableWithoutFeedback>
             <View style={styles.modalView}>
               <View style={styles.mainWrap}>
                 <View style={styles.viewTitle}>
-                  <Text style={styles.mainTitle}>Select Priority</Text>
+                  <Text style={styles.mainTitle}>Sort Items</Text>
                 </View>
                 <View style={styles.prioItemContainer}>
                   <TouchableOpacity
                     style={styles.prioItem}
-                    onPress={() => setPriority(4)}
+                    onPress={() => setSortBy('name')}
                   >
-                    <View style={[styles.priorityBox, { backgroundColor: 'red' }]} />
-                    <Text>High</Text>
+                    <Text>Name</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.prioItem}
-                    onPress={() => setPriority(3)}
+                    onPress={() => setSortBy('priority')}
                   >
-                    <View style={[styles.priorityBox, { backgroundColor: 'orange' }]} />
-                    <Text>Medium</Text>
+                    <Text>Priority</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.prioItem}
-                    onPress={() => setPriority(2)}
+                    onPress={() => setSortBy('none')}
                   >
-                    <View style={[styles.priorityBox, { backgroundColor: 'yellow' }]} />
-                    <Text>Low</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.prioItem}
-                    onPress={() => setPriority(1)}
-                  >
-                    <View style={[styles.priorityBox, { backgroundColor: 'white' }]} />
-                    <Text>Normal</Text>
+                    <Text>None</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -61,4 +51,4 @@ const PriorityModal = ({ show, closePriorityModal, setPriority }) => {
   );
 };
 
-export default PriorityModal;
+export default SortModal;

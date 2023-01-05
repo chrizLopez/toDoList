@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
   listContainer: {
     marginHorizontal: 60,
     marginTop: 50,
+  },
+  inputView: {
+    flexDirection: 'row',
+  },
+  borderMargin: {
+    marginVertical: 10
   }
 });
 
