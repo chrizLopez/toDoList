@@ -7,6 +7,7 @@ import InputBox from './components/inputBox';
 import PriorityModal from './components/priorityModal';
 import SortModal from './components/sortModal';
 import CircleIcon from './assets/svg/sort.svg'
+import { storeItem, getItems } from './utils/helper';
 import styles from './style';
 
 const App = () => {
@@ -17,6 +18,14 @@ const App = () => {
   const [showSortModal, setShowSortModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [sortItemsBy, setSortItemsBy] = useState('none');
+
+  useEffect(() => {
+    const getToDoItems = async () => {
+      const items = await getItems();
+      setTodoItem(items);
+    };
+    getToDoItems();
+  }, []);
 
   useEffect(() => {
     const list = filter(todoItem, (item) => item.status == 1);
@@ -31,6 +40,7 @@ const App = () => {
       handleSortItems(sortItemsBy);
       return;
     }
+    storeItem(todoList);
     setKeyCounter(keyCounter + 1);
   }
 
@@ -39,6 +49,7 @@ const App = () => {
     const ind = findIndex(slots, (it) => it.id === item.id);
     slots.splice(ind, 1);
     setTodoItem(slots);
+    storeItem(slots);
     setKeyCounter(keyCounter + 1);
   }
 
@@ -51,6 +62,7 @@ const App = () => {
       handleSortItems(sortItemsBy);
       return;
     }
+    storeItem(sorted);
     setKeyCounter(keyCounter + 1);
   }
 
@@ -69,6 +81,7 @@ const App = () => {
       handleSortItems(sortItemsBy);
       return;
     }
+    storeItem(slots);
     setKeyCounter(keyCounter + 1);
   }
 
@@ -81,6 +94,7 @@ const App = () => {
     if (val === 'priority') sorted = orderBy(slots, 'priority', 'desc');
     if (val == 'none') return;
     setTodoItem(sorted);
+    storeItem(sorted);
     setKeyCounter(keyCounter + 1);
   }
 
