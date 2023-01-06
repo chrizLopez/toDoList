@@ -4,8 +4,10 @@ import { findIndex, filter, orderBy } from 'lodash';
 
 import ItemList from './components/itemList';
 import InputBox from './components/inputBox';
+
 import PriorityModal from './components/priorityModal';
 import SortModal from './components/sortModal';
+
 import CircleIcon from './assets/svg/sort.svg'
 import { storeItem, getItems } from './utils/helper';
 import styles from './style';
@@ -19,6 +21,10 @@ const App = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [sortItemsBy, setSortItemsBy] = useState('none');
 
+  /**
+   * This effect will run once only during component initialization.
+   * This will get task items stored in local storage.
+   */
   useEffect(() => {
     const getToDoItems = async () => {
       const items = await getItems();
@@ -27,11 +33,21 @@ const App = () => {
     getToDoItems();
   }, []);
 
+  /**
+   * This effect will run everytime a key counter is incremented,
+   * which is used to watch changes in task list when completing a task
+   * and counts the number of completed tasks
+   */
   useEffect(() => {
     const list = filter(todoItem, (item) => item.status == 1);
     setCompletedTasks(list.length);
   }, [keyCounter]);
 
+  /**
+   * This method is called when adding a new task. After adding, it checks if 
+   * the sorting is set and calls the sorting method.
+   * @param item required. Todo item to be added.
+   */
   const handleAddTodo = (item) => {
     const todoList = todoItem;
     todoList.push(item);
@@ -44,6 +60,10 @@ const App = () => {
     setKeyCounter(keyCounter + 1);
   }
 
+  /**
+   * This method is called when removing a task
+   * @param item required. Todo item to be removed.
+   */
   const handleRemoveItem = (item) => {
     const slots = [...todoItem];
     const ind = findIndex(slots, (it) => it.id === item.id);
@@ -53,6 +73,11 @@ const App = () => {
     setKeyCounter(keyCounter + 1);
   }
 
+  /**
+   * This method is called when a task is completed. After completing, it checks if 
+   * the sorting is set and calls the sorting method.
+   * @param item required. Todo item to be completed.
+   */
   const handleTaskCompleted = (item) => {
     const slots = [...todoItem];
     const ind = findIndex(slots, (it) => it.id === item.id);
@@ -66,11 +91,21 @@ const App = () => {
     setKeyCounter(keyCounter + 1);
   }
 
+  /**
+   * This method is called to show the priority selection modal.
+   * Also saves the item that will be updated.
+   * @param item required. Todo item to be updated.
+   */
   const handleTogglePrio = (item) => {
     setSelectedTask(item);
     setShowPrioModal(true);
   }
 
+  /**
+   * This method is called to set priority of a task. After update, it checks if 
+   * the sorting is set and calls the sorting method.
+   * @param val required. Todo item to be updated.
+   */
   const handleSetPriority = (val) => {
     const slots = [...todoItem];
     const ind = findIndex(slots, (it) => it.id === selectedTask.id);
@@ -85,6 +120,12 @@ const App = () => {
     setKeyCounter(keyCounter + 1);
   }
 
+  /**
+   * This method is called to sort todo tasks by either task name or priority.
+   * If none is slelected no sorting will occur and new items will be
+   * automatically added at the bottom.
+   * @param val required. Type of sorting.
+   */
   const handleSortItems = (val) => {
     const slots = [...todoItem];
     let sorted = null;
@@ -98,6 +139,10 @@ const App = () => {
     setKeyCounter(keyCounter + 1);
   }
 
+  /**
+   * Used to show each item list component of all 
+   * uncompleted tasks
+   */
   const listItems = todoItem.map((item) => {
     if (item.status === 1) return;
     return (
@@ -111,6 +156,10 @@ const App = () => {
     )
   });
 
+  /**
+   * Used to show each item list component of all 
+   * completed tasks
+   */
   const listItemsCompleted = todoItem.map((item) => {
     if (item.status === 0) return;
     return (
@@ -123,7 +172,11 @@ const App = () => {
       />
     )
   });
-
+  /**
+     * Used for showing the the number of completed tasks
+     * @returns completed tasks count as string and returns
+     * an empty string if count is 0.
+     */
   const countCompleted = () => {
     if (completedTasks === 0) return '';
     return `${completedTasks} / `;
@@ -131,11 +184,13 @@ const App = () => {
 
   return (
     <SafeAreaView>
+      {/* Priority Modal for setting task prority */}
       <PriorityModal
         show={showPrioModal}
         closePriorityModal={() => setShowPrioModal(false)}
         setPriority={(val) => handleSetPriority(val)}
       />
+      {/* Sort Modal for sorting tasks */}
       <SortModal
         show={showSortModal}
         closeSortModal={() => setShowSortModal(false)}
@@ -148,6 +203,7 @@ const App = () => {
           </View>
           <View style={styles.listContainer}>
             <View style={styles.inputView}>
+              {/* InputBox component for adding tasks */}
               <InputBox addItems={handleAddTodo} />
               <TouchableOpacity onPress={() => setShowSortModal(true)}>
                 <CircleIcon height={30} width={30} />

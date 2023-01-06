@@ -11,6 +11,7 @@ const ItemList = ({ data, removeItem, taskComplete, togglePrioModal }) => {
   if (data.priority == 2) dataPrioColor = 'yellow';
   if (data.priority == 3) dataPrioColor = 'orange';
   if (data.priority == 4) dataPrioColor = 'red';
+
   return (
     <View style={styles.itemView}>
       <View style={styles.leftItem}>

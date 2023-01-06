@@ -8,6 +8,11 @@ import styles from './style';
 const InputBox = ({ addItems }) => {
   const [textValue, setTextValue] = useState('');
 
+  /**
+   * This method is used for adding tasks
+   * @method generateRandomId() - is used to set unique ID to a task
+   * to be used when removing or updating the task
+   */
   const handleAddItem = () => {
     const data = {
       item: textValue,

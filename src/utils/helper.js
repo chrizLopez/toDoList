@@ -1,5 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * This method will generate random number from time
+ * @returns integer to be used as a unique ID
+ */
 export const generateRandomId = () => {
   const currentdate = new Date();
   const id = currentdate.getMonth() + ""
@@ -10,6 +14,10 @@ export const generateRandomId = () => {
   return id;
 }
 
+/**
+ * This method will store task list to local storage
+ * @param data Required. task list data to be stored
+ */
 export const storeItem = async (data) => {
   try {
     const jsonValue = JSON.stringify(data)
@@ -19,6 +27,10 @@ export const storeItem = async (data) => {
   }
 }
 
+/**
+ * This method will retrieve stored data from local storage
+ * @returns task lists
+ */
 export const getItems = async () => {
   try {
     const value = await AsyncStorage.getItem('todoList');
