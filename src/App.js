@@ -87,7 +87,7 @@ const App = () => {
       handleSortItems(sortItemsBy);
       return;
     }
-    storeItem(sorted);
+    storeItem(slots);
     setKeyCounter(keyCounter + 1);
   }
 
